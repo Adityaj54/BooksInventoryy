@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Geturl from "./Books";
-// by default runs after every re-render
-// cleanup function
-// second parameter
+
 
 const url = Geturl();
+
 const ShowBooks = () => {
     const [show,setShow] = useState(false);
 
@@ -13,7 +12,9 @@ const ShowBooks = () => {
         <button className='btn' onClick={() => setShow(!show)}>
             Get Books
         </button>
+
             {show && <GetBooks/>}
+
         </>
     )
 

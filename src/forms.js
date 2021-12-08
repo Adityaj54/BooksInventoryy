@@ -6,7 +6,7 @@ import Notify from "./notify";
 toast.configure();
 
 
-const Forms = (callback) => {
+const Forms = () => {
 
     const [title,setTitle] = useState('');
     const [author,setAuthor] = useState('');
@@ -20,10 +20,9 @@ const Forms = (callback) => {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        setErrors(Validation(book));
+        setErrors(Validation(book),false);
 
         if (Object.keys(errors).length === 0) {
-
 
             fetch('http://localhost:8080/books', {
                 method: 'POST',

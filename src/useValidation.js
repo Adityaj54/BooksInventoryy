@@ -1,45 +1,64 @@
-export default function Validation(values)
+export default function Validation(values,flag)
 {
 
     let errors = {}
 
-    if(!values.title.trim()){
-        errors.title = "Title required"
-    }
-    if(!values.barcode.trim()){
-        errors.barcode = "Barcode required"
-    }
+        if (flag){
+            if (!values.query.trim()) {
+                errors.query = "ISBN required"
+            } else if (!/^\d+$/i.test(values.query)) {
+                errors.query = "ISBN must only contain numbers"
 
-    if(!values.query.trim()){
-        errors.query = "ISBN required"
-    }
-    else if(!/^\d+$/i.test(values.query))
-    {
-        errors.query = "ISBN must only contain numbers"
+            } else if (!(values.query.length === 13)) {
+                errors.query = "Should be 13 digits long"
+            } else if (!(/^(9)/g.test(values.query))) {
+                errors.query = "should start with 9"
+            } else {
 
-    }
-
-   else if(!(values.query.length === 13)){
-        errors.query = "Should be 13 digits long"
-    }
-
-    else if(!(/^(9)/g.test(values.query))){
-        errors.query = "should start with 9"
-    }
-    else
-    {
-
-        let check;
-        let str;
-        str = values.query.slice(0,12).toString()
-        console.log(str)
-        check = Calculate(str)
-    if (check != values.query.slice(-1)){
-        errors.query = "Cannot Verify the CheckSum"
-    }
+                let check;
+                let str;
+                str = values.query.slice(0, 12).toString()
+                console.log(str)
+                check = Calculate(str)
+                if (check != values.query.slice(-1)) {
+                    errors.query = "Cannot Verify the CheckSum"
+                }
 
 
-    }
+            }
+            return errors
+        }
+
+        if (!values.title.trim()) {
+            errors.title = "Title required"
+        }
+        if (!values.barcode.trim()) {
+            errors.barcode = "Barcode required"
+        }
+
+        if (!values.query.trim()) {
+            errors.query = "ISBN required"
+        } else if (!/^\d+$/i.test(values.query)) {
+            errors.query = "ISBN must only contain numbers"
+
+        } else if (!(values.query.length === 13)) {
+            errors.query = "Should be 13 digits long"
+        } else if (!(/^(9)/g.test(values.query))) {
+            errors.query = "should start with 9"
+        } else {
+
+            let check;
+            let str;
+            str = values.query.slice(0, 12).toString()
+            check = Calculate(str)
+            if (check != values.query.slice(-1)) {
+                errors.query = "Cannot Verify the CheckSum"
+            }
+
+
+        }
+
+
 
     return errors
 }
